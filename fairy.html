@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>小梁同学</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #container {
+            /*border: 2px solid black;*/
+            width: 300px;
+            height: 300px;
+            margin: 150px auto;
+            perspective: 20000px;
+        }
+        
+        .outer {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            transform-style: preserve-3d;
+            transform: rotateX(45deg) rotateY(45deg);
+            animation: ro 4s linear infinite;
+        }
+        
+        @keyframes ro {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+            100% {
+                transform: rotateX(360deg) rotateY(360deg);
+            }
+        }
+        
+        .inner {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            transform-style: preserve-3d;
+        }
+        
+        .top {
+            /*background-color: red;*/
+            transform: translateZ(150px);
+        }
+        
+        .bottom {
+            /*background-color: green;*/
+            transform: translateZ(-150px);
+        }
+        
+        .left {
+            /*background-color: blue;*/
+            transform: translateX(-150px) rotateY(-90deg);
+        }
+        
+        .right {
+            /*background-color: pink;*/
+            transform: translateX(150px) rotateY(90deg);
+        }
+        
+        .before {
+            /*background-color: yellow;*/
+            transform: translateY(150px) rotateX(90deg);
+        }
+        
+        .after {
+            /*background-color: orangered;*/
+            transform: translateY(-150px) rotateX(90deg);
+        }
+        
+        @keyframes a1 {
+            0% {
+                transform: translateZ(0px) scale(1) rotateZ(0deg)
+            }
+            20% {
+                transform: translateZ(150px) scale(0.5) rotateZ(90deg)
+            }
+            10% {
+                transform: translateZ(150px) scale(0) rotateZ(90deg)
+            }
+            40% {
+                transform: translateZ(300px) scale(0.5) rotateZ(180deg)
+            }
+            60% {
+                transform: translateZ(0px) scale(1) rotateZ(0deg)
+            }
+            100% {
+                transform: translateZ(0px) scale(1) rotateZ(0deg)
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <div class="outer">
+            <div class="inner top"></div>
+            <div class="inner bottom"></div>
+            <div class="inner left"></div>
+            <div class="inner right"></div>
+            <div class="inner before"></div>
+            <div class="inner after"></div>
+        </div>
+    </div>
+
+    <script>
+        var arr = document.querySelectorAll(".inner");
+        for (var i = 0; i < arr.length; i++) {
+            var frag = document.createDocumentFragment();
+            for (var row = 0; row < 3; row++) {
+                for (var col = 0; col < 3; col++) {
+                    var divs = document.createElement("div");
+                    divs.style.cssText = "width:100px; height:100px; border:2px solid white; " +
+                        "box-sizing:border-box; position:absolute; background-image:url(img/" + i + ".png); " +
+                        "animation: a1 5s ease-out infinite ; ";
+                    divs.style.left = col * 100 + "px";
+                    divs.style.top = row * 100 + "px";
+                    divs.style.backgroundPositionX = -col * 100 + "px";
+                    divs.style.backgroundPositionY = -row * 100 + "px";
+                    frag.appendChild(divs);
+                    // arr[i].appendChild(divs);
+                }
+            }
+            arr[i].appendChild(frag);
+        }
+    </script>
+</body>
+
+</html>
